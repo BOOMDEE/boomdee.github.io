@@ -1,0 +1,27 @@
+name: Build Static Site
+
+on:
+  schedule:
+    - cron: '0 * * * *'  # 每小时运行一次
+  workflow_dispatch:  # 手动触发
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Run build_static.py
+        run: python build_static.py
+      - name: Commit & Push
+        run: |
+          git config --local user.name "github-actions"
+          git config --local user.email "actions@github.com"
+          git add .
+          git commit -m "Update static files" || echo "No changes"
+          git push
