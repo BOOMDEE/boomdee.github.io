@@ -16,5 +16,6 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: html
       run: |
+        bash deploy.sh install
         bash deploy.sh run
         python build_static.py
