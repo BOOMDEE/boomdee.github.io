@@ -17,5 +17,4 @@ jobs:
     - name: html
       run: |
         bash deploy.sh install
-        bash deploy.sh run
         python build_static.py
